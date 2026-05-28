@@ -32,7 +32,6 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           source: "."
           target: ${{ env.TARGET_DIR }}
-          rm: true 
           exclude: ".git/,.github/,node_modules/,.next/"
 
       - name: ⚙️ Build and Restart Next.js on VPS
