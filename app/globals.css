@@ -1,0 +1,301 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark mode support */
+.dark {
+  --background: #020617;
+  --foreground: #e2e8f0;
+  --accent: #22d3ee;
+  --border: #1e293b;
+}
+
+body {
+  @apply bg-background text-foreground transition-colors duration-200;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.glass-card {
+  @apply rounded-2xl border border-slate-800 bg-slate-900/60 shadow-card backdrop-blur;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  @apply border-slate-700 bg-slate-900/80 shadow-lg;
+  transform: translateY(-2px);
+}
+
+/* Dark mode glass card */
+.dark .glass-card {
+  @apply border-slate-600 bg-slate-900/50;
+}
+
+.dark .glass-card:hover {
+  @apply border-slate-500 bg-slate-900/60 shadow-xl;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(34, 211, 238, 0.6);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s ease-out forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Stagger animations */
+.animate-stagger > * {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-stagger > :nth-child(1) { animation-delay: 0.1s; }
+.animate-stagger > :nth-child(2) { animation-delay: 0.2s; }
+.animate-stagger > :nth-child(3) { animation-delay: 0.3s; }
+.animate-stagger > :nth-child(4) { animation-delay: 0.4s; }
+.animate-stagger > :nth-child(5) { animation-delay: 0.5s; }
+.animate-stagger > :nth-child(6) { animation-delay: 0.6s; }
+
+/* Profile image styles */
+.profile-image-wrapper {
+  @apply relative overflow-hidden rounded-2xl border-2 border-cyan-500/30;
+}
+
+.profile-image-wrapper img {
+  @apply w-full h-full object-cover;
+  transition: transform 0.3s ease;
+}
+
+.profile-image-wrapper:hover img {
+  transform: scale(1.05);
+}
+
+/* Dark mode profile image */
+.dark .profile-image-wrapper {
+  @apply border-cyan-500/40;
+}
+
+/* Form styles */
+input, textarea {
+  @apply w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none ring-cyan-400 focus:ring focus:border-cyan-500 transition-colors duration-200;
+}
+
+.dark input, .dark textarea {
+  @apply border-slate-600 bg-slate-900/70;
+}
+
+.dark input:focus, .dark textarea:focus {
+  @apply ring-cyan-400 border-cyan-500;
+}
+
+/* Button styles */
+button {
+  @apply transition-colors duration-200;
+}
+
+.dark button:hover {
+  @apply bg-cyan-500/20;
+}
+
+/* Link styles */
+a {
+  @apply transition-colors duration-200;
+}
+
+.dark a:hover {
+  @apply text-cyan-300;
+}
+
+/* Responsive typography */
+h1 {
+  @apply text-4xl font-bold tracking-tight text-white md:text-5xl;
+}
+
+h2 {
+  @apply text-xl font-semibold text-cyan-300;
+}
+
+h3 {
+  @apply text-sm font-semibold text-slate-400 uppercase tracking-[0.2em];
+}
+
+p {
+  @apply text-slate-300 leading-7;
+}
+
+/* Dark mode text adjustments */
+.dark h1 {
+  @apply text-white;
+}
+
+.dark h2 {
+  @apply text-cyan-300;
+}
+
+.dark h3 {
+  @apply text-slate-400;
+}
+
+.dark p {
+  @apply text-slate-300;
+}
+
+/* Skill tags */
+.skill-tag {
+  @apply rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-200 transition-all hover:border-cyan-400 hover:bg-cyan-500/10 hover:text-cyan-300;
+}
+
+.dark .skill-tag {
+  @apply border-slate-600 bg-slate-900/60;
+}
+
+.dark .skill-tag:hover {
+  @apply border-cyan-400 bg-cyan-500/20 text-cyan-300;
+}
+
+/* Metric cards */
+.metric-card {
+  @apply rounded-xl border border-slate-800 bg-slate-900 p-3 transition-all hover:border-cyan-500/50 hover:bg-slate-800;
+}
+
+.dark .metric-card {
+  @apply border-slate-600 bg-slate-900/70;
+}
+
+.dark .metric-card:hover {
+  @apply border-cyan-500/30 bg-slate-800/80;
+}
+
+/* Experience flip cards */
+.experience-flip-card {
+  perspective: 1200px;
+}
+
+.experience-flip-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.experience-flip-label {
+  display: block;
+  min-height: 430px;
+  cursor: pointer;
+}
+
+.experience-flip-inner {
+  position: relative;
+  display: block;
+  min-height: 430px;
+  transform-style: preserve-3d;
+  transition: transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.experience-flip-toggle:checked + .experience-flip-label .experience-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.experience-flip-face {
+  @apply absolute inset-0 flex flex-col rounded-xl border border-slate-800 bg-slate-950/80 p-5 shadow-card;
+  backface-visibility: hidden;
+}
+
+.experience-flip-front {
+  @apply hover:border-cyan-500/40;
+}
+
+.experience-flip-back {
+  @apply border-cyan-500/30 bg-slate-950;
+  transform: rotateY(180deg);
+}
+
+.experience-flip-scroll {
+  @apply block space-y-3 overflow-y-auto pr-2 text-sm leading-6 text-slate-300;
+  max-height: 330px;
+}
+
+.experience-flip-bullet {
+  @apply flex gap-2 rounded-lg border border-slate-800 bg-slate-900/70 p-3;
+}
+
+/* Section spacing */
+.section {
+  @apply glass-card animate-fade-in-up p-6;
+}
+
+.section:nth-child(2) { animation-delay: 0.2s; }
+.section:nth-child(3) { animation-delay: 0.3s; }
+.section:nth-child(4) { animation-delay: 0.4s; }
+.section:nth-child(5) { animation-delay: 0.5s; }
+.section:nth-child(6) { animation-delay: 0.6s; }
+.section:nth-child(7) { animation-delay: 0.7s; }
+.section:nth-child(8) { animation-delay: 0.8s; }
+.section:nth-child(9) { animation-delay: 0.9s; }

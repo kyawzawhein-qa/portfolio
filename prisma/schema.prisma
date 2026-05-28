@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id           Int          @id @default(autoincrement())
+  name         String
+  title        String
+  email        String       @unique
+  phone        String?
+  location     String?
+  intro        String
+  summary      String
+  profileImage String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  experiences  Experience[]
+  educations   Education[]
+  skills       Skill[]
+  projects     Project[]
+  testimonials Testimonial[]
+  certifications Certification[]
+}
+
+model Experience {
+  id          Int                 @id @default(autoincrement())
+  role        String
+  company     String
+  description String?
+  startDate   DateTime
+  endDate     DateTime?
+  isCurrent   Boolean             @default(false)
+  order       Int                 @default(0)
+  profile     Profile             @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId   Int
+  highlights  ExperienceHighlight[]
+}
+
+model ExperienceHighlight {
+  id           Int        @id @default(autoincrement())
+  text         String
+  order        Int        @default(0)
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  experienceId Int
+}
+
+model Education {
+  id          Int      @id @default(autoincrement())
+  institution String
+  degree      String
+  startYear   Int?
+  endYear     Int?
+  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId   Int
+}
+
+model Skill {
+  id        Int     @id @default(autoincrement())
+  name      String
+  category  String?
+  level     String?
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId Int
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  technologies String   @default("[]")
+  url         String?
+  githubUrl   String?
+  imageUrl    String?
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId   Int
+}
+
+model Testimonial {
+  id        Int      @id @default(autoincrement())
+  name      String
+  role      String?
+  company   String?
+  content   String
+  rating    Int?     @default(5)
+  imageUrl  String?
+  order     Int      @default(0)
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId Int
+}
+
+model Certification {
+  id         Int      @id @default(autoincrement())
+  name       String
+  issuer     String?
+  date       DateTime?
+  expiryDate DateTime?
+  credentialId String?
+  credentialUrl String?
+  profile    Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId  Int
+}
