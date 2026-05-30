@@ -114,10 +114,6 @@ export default async function AdminPage() {
               <span className="mb-2 block text-sm font-medium text-slate-300">Upload profile image</span>
               <input name="profileImageFile" type="file" accept="image/*" className="cursor-pointer text-sm file:mr-3 file:rounded-md file:border-0 file:bg-cyan-500 file:px-3 file:py-2 file:text-sm file:font-medium file:text-slate-950" />
             </label>
-            <label className="block">
-              <span className="mb-2 block text-sm font-medium text-slate-300">Or image URL</span>
-              <input name="profileImage" defaultValue={profile.profileImage ?? ""} placeholder="https://..." />
-            </label>
           </div>
 
           <div className="grid gap-3 md:grid-cols-2">
