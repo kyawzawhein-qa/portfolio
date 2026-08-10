@@ -8,35 +8,42 @@ datasource db {
 }
 
 model Profile {
-  id           Int          @id @default(autoincrement())
-  name         String
-  title        String
-  email        String       @unique
-  phone        String?
-  location     String?
-  intro        String
-  summary      String
-  profileImage String?
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  experiences  Experience[]
-  educations   Education[]
-  skills       Skill[]
-  projects     Project[]
-  testimonials Testimonial[]
+  id             Int              @id @default(autoincrement())
+  name           String
+  title          String
+  email          String           @unique
+  phone          String?
+  location       String?
+  intro          String
+  summary        String
+  profileImage   String?
+  linkedinUrl    String?
+  githubUrl      String?
+  resumeUrl      String?
+  heroTags       String           @default("[]")
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  experiences    Experience[]
+  educations     Education[]
+  skills         Skill[]
+  projects       Project[]
+  testimonials   Testimonial[]
   certifications Certification[]
+  metrics        Metric[]
+  marketSignals  MarketSignal[]
+  deliveryItems  DeliveryItem[]
 }
 
 model Experience {
-  id          Int                 @id @default(autoincrement())
+  id          Int                   @id @default(autoincrement())
   role        String
   company     String
   description String?
   startDate   DateTime
   endDate     DateTime?
-  isCurrent   Boolean             @default(false)
-  order       Int                 @default(0)
-  profile     Profile             @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  isCurrent   Boolean               @default(false)
+  order       Int                   @default(0)
+  profile     Profile               @relation(fields: [profileId], references: [id], onDelete: Cascade)
   profileId   Int
   highlights  ExperienceHighlight[]
 }
@@ -50,12 +57,12 @@ model ExperienceHighlight {
 }
 
 model Education {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   institution String
   degree      String
   startYear   Int?
   endYear     Int?
-  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile     Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
   profileId   Int
 }
 
@@ -69,40 +76,81 @@ model Skill {
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String?
-  technologies String   @default("[]")
-  url         String?
-  githubUrl   String?
-  imageUrl    String?
-  featured    Boolean  @default(false)
-  order       Int      @default(0)
-  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  profileId   Int
+  id           Int     @id @default(autoincrement())
+  title        String
+  description  String?
+  technologies String  @default("[]")
+  url          String?
+  githubUrl    String?
+  imageUrl     String?
+  category     String?
+  problem      String?
+  approach     String?
+  outcome      String?
+  featured     Boolean @default(false)
+  order        Int     @default(0)
+  profile      Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId    Int
 }
 
 model Testimonial {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   name      String
   role      String?
   company   String?
   content   String
-  rating    Int?     @default(5)
+  rating    Int?    @default(5)
   imageUrl  String?
-  order     Int      @default(0)
-  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  order     Int     @default(0)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
   profileId Int
 }
 
 model Certification {
-  id         Int      @id @default(autoincrement())
-  name       String
-  issuer     String?
-  date       DateTime?
-  expiryDate DateTime?
-  credentialId String?
+  id            Int       @id @default(autoincrement())
+  name          String
+  issuer        String?
+  date          DateTime?
+  expiryDate    DateTime?
+  credentialId  String?
   credentialUrl String?
-  profile    Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  profileId  Int
+  profile       Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId     Int
+}
+
+model Metric {
+  id        Int     @id @default(autoincrement())
+  label     String
+  value     String
+  order     Int     @default(0)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId Int
+}
+
+model MarketSignal {
+  id        Int     @id @default(autoincrement())
+  title     String
+  detail    String
+  tone      String  @default("cyan")
+  order     Int     @default(0)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId Int
+}
+
+model DeliveryItem {
+  id        Int     @id @default(autoincrement())
+  label     String
+  value     String
+  order     Int     @default(0)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId Int
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
 }

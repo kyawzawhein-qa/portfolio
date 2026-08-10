@@ -112,6 +112,21 @@ body {
   animation: float 3s ease-in-out infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-slide-in-left,
+  .animate-slide-in-right,
+  .animate-pulse-glow,
+  .animate-float,
+  .animate-stagger > * {
+    animation: none !important;
+  }
+
+  .experience-flip-inner {
+    transition: none !important;
+  }
+}
+
 /* Stagger animations */
 .animate-stagger > * {
   animation: fadeInUp 0.6s ease-out forwards;
@@ -161,17 +176,9 @@ button {
   @apply transition-colors duration-200;
 }
 
-.dark button:hover {
-  @apply bg-cyan-500/20;
-}
-
 /* Link styles */
 a {
   @apply transition-colors duration-200;
-}
-
-.dark a:hover {
-  @apply text-cyan-300;
 }
 
 /* Responsive typography */

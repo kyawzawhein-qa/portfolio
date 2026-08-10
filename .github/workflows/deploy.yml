@@ -32,7 +32,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           source: "."
           target: ${{ env.TARGET_DIR }}
-          exclude: ".git/,.github/,node_modules/,.next/"
+          exclude: ".git/,.github/,node_modules/,.next/,test-results/,playwright-report/"
 
       - name: ⚙️ Build and Restart Next.js on VPS
         uses: appleboy/ssh-action@v1.0.3
@@ -42,14 +42,12 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd ${{ env.TARGET_DIR }}
-            # .env ဖိုင် မရှိသေးပါက အလိုအလျောက် ဖန်တီးပေးရန်
             if [ ! -f .env ]; then cp .env.example .env; fi
-            
-            # Packages များသွင်းပြီး Build လုပ်ရန်
+            mkdir -p public/uploads
             npm install
             npx prisma generate
+            npx prisma db push
+            node prisma/ensure-content.cjs
             npm run build
-            
-            # PM2 ဖြင့် အသက်သွင်းရန်
             pm2 restart ${{ env.PM2_NAME }} || pm2 start npm --name "${{ env.PM2_NAME }}" -- start
             pm2 save
