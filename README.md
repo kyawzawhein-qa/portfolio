@@ -60,13 +60,13 @@ Other scripts: `npm run build`, `npm run start`, `npm run lint`.
 | `ADMIN_PASSWORD` | Plain admin password when `ADMIN_PASSWORD_HASH` is unset |
 | `ADMIN_PASSWORD_HASH` | Optional bcrypt hash; when set, login verifies against this instead of `ADMIN_PASSWORD` |
 
-**Before any production deploy:** set strong, unique `NEXTAUTH_SECRET`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` (or `ADMIN_PASSWORD_HASH`). Never commit real secrets.
+**Before any public deploy:** set strong, unique `NEXTAUTH_SECRET`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` (or `ADMIN_PASSWORD_HASH`). Never commit real secrets or rely on unconfigured `lib/auth.ts` fallbacks.
 
 ### Local admin (dev only)
 
-If you do not override auth env vars, `lib/auth.ts` falls back to username `kyawzawhein` and password `Kzh@dm1n` for local dogfooding only.
+If you do not set `ADMIN_EMAIL`, `ADMIN_PASSWORD`, or `ADMIN_PASSWORD_HASH` in `.env`, `lib/auth.ts` uses **unconfigured local fallbacks** for private dogfooding on your machine. Inspect that file locally if you need the defaults; do not copy those values into docs, commits, or public deploys.
 
-Change these values in `.env` (and rotate secrets) before deploying anywhere public. The login form label says “email” but authentication matches `ADMIN_EMAIL` as the username.
+Override auth via `.env` (and rotate secrets) before deploying anywhere public. The login form label says “email” but authentication matches `ADMIN_EMAIL` as the username.
 
 ## Repository
 
