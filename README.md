@@ -36,7 +36,7 @@ cd portfolio
 npm install
 ```
 
-Create a `.env` file in the project root (see below), then initialize the database and seed sample QA portfolio content:
+Copy [`.env.example`](.env.example) to `.env` in the project root, fill in your local values, then initialize the database and seed sample QA portfolio content:
 
 ```bash
 npm run prisma:generate
