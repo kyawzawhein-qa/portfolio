@@ -48,6 +48,7 @@ jobs:
             # Packages များသွင်းပြီး Build လုပ်ရန်
             npm install
             npx prisma generate
+            npx prisma db push
             npm run build
             
             # PM2 ဖြင့် အသက်သွင်းရန်

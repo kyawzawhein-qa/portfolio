@@ -15,7 +15,6 @@ import { prisma } from "@/lib/prisma";
 import ProjectCard from "@/components/ProjectCard";
 import Testimonial from "@/components/Testimonial";
 import CertificationBadge from "@/components/CertificationBadge";
-import ThemeToggle from "@/components/ThemeToggle";
 import Link from "next/link";
 
 type SkillView = { id: number; name: string; category: string | null };
@@ -175,12 +174,11 @@ export default async function HomePage() {
     <div className="space-y-6">
       {/* Hero Section */}
       <section className="hero-grid glass-card animate-fade-in-up overflow-hidden p-8">
-        <div className="flex justify-between items-center mb-4">
+        <div className="mb-4">
           <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-cyan-500/40 bg-cyan-500/10 px-3 py-1 text-xs uppercase tracking-wider text-cyan-300">
             <Sparkles className="h-4 w-4" />
             QA Engineer Portfolio
           </p>
-          <ThemeToggle />
         </div>
         <div className="grid items-start gap-6 md:grid-cols-[1.2fr_1fr]">
           <div className="animate-slide-in-left">
