@@ -106,3 +106,10 @@ model Certification {
   profile    Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
   profileId  Int
 }
+
+/// Privacy-safe unique visitors (stores SHA-256 hash of IP + salt, never raw IP).
+model UniqueVisitor {
+  id         Int      @id @default(autoincrement())
+  ipHash     String   @unique
+  firstSeenAt DateTime @default(now())
+}
