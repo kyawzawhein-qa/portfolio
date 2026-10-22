@@ -22,7 +22,7 @@ export default function CertificationBadge({
 
   return (
     <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-4 transition-all hover:border-cyan-500/50 hover:bg-slate-950">
-      <h3 className="mb-2 font-semibold text-white">{name}</h3>
+      <h3 className="mb-2 font-semibold normal-case tracking-normal text-white">{name}</h3>
       {issuer && (
         <p className="mb-1 text-sm text-slate-400">
           Issued by {issuer}

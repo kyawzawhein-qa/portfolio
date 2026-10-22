@@ -4,11 +4,12 @@ import { compare } from "bcryptjs";
 
 const adminUsername = process.env.ADMIN_EMAIL || "kyawzawhein";
 const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH || "";
-const adminPassword = process.env.ADMIN_PASSWORD || "Kzh@dm1n";
+const adminPassword = process.env.ADMIN_PASSWORD || "";
 
 async function verifyPassword(password: string) {
-  if (adminPasswordHash && await compare(password, adminPasswordHash)) return true;
-  return password === adminPassword;
+  if (adminPasswordHash && (await compare(password, adminPasswordHash))) return true;
+  if (adminPassword && password === adminPassword) return true;
+  return false;
 }
 
 export const authOptions: NextAuthOptions = {

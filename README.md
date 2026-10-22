@@ -1,6 +1,6 @@
 # Kyaw Zaw Hein — Personal Site
 
-**Live at [kyawzawhein.com](https://kyawzawhein.com)** — a QA engineer portfolio that presents resume-backed experience, skills, and delivery focus, with a small admin surface to keep the story current.
+**Live at [kyawzawhein.com](https://kyawzawhein.com)** — a QA engineer portfolio with a CMS-style admin panel, Markdown blog, unique visitor counter, and Playwright smoke tests.
 
 Maintained by [Kyaw Zaw Hein](https://github.com/kyawzawhein-qa) (`kyawzawhein-qa`).
 
@@ -8,11 +8,15 @@ Maintained by [Kyaw Zaw Hein](https://github.com/kyawzawhein-qa) (`kyawzawhein-q
 
 | Route | Purpose |
 | --- | --- |
-| [`/`](https://kyawzawhein.com) | Public single-page portfolio (SQLite via Prisma): hero and intro, capability map, summary, skills by category, projects, flip-card work experience with highlights, education, testimonials, certifications, and contact details. Light/dark theme toggle. |
-| [`/login`](https://kyawzawhein.com/login) | NextAuth credentials sign-in (username + password). |
-| [`/admin`](https://kyawzawhein.com/admin) | Session-protected dashboard: edit profile (including image upload to `public/uploads`), and create/update/delete **experience**, **education**, and **skills** via Server Actions. Projects and certifications on the homepage are stored in the database (seeded locally); additional CRUD helpers live in `app/api/actions/portfolio/crud.ts` for future admin UI. |
+| [`/`](https://kyawzawhein.com) | Public portfolio (SQLite via Prisma): hero, metrics, market signals, capability map, skills, projects, experience flip-cards, education, testimonials, certifications, contact form. Light/dark theme toggle. |
+| [`/blog`](https://kyawzawhein.com/blog) | Markdown posts from `content/blog` |
+| [`/feed.xml`](https://kyawzawhein.com/feed.xml) | Blog RSS feed |
+| [`/login`](https://kyawzawhein.com/login) | NextAuth credentials sign-in |
+| [`/admin`](https://kyawzawhein.com/admin) | Session-protected dashboard with `requireAdmin()` on mutations: profile (image/resume upload), projects, experience, education, skills, metrics, market signals, delivery map, testimonials, certifications, contact inbox |
 
-Data model: `Profile`, `Experience` (+ highlights), `Education`, `Skill`, `Project`, `Testimonial`, `Certification` (`prisma/schema.prisma`).
+**SEO:** Open Graph metadata, robots, sitemap, Person JSON-LD, RSS alternate link.
+
+**Visitor counter:** hashed IPs with `VISITOR_HASH_SALT` (`UniqueVisitor` model).
 
 ## Tech stack
 
@@ -24,8 +28,6 @@ Data model: `Profile`, `Experience` (+ highlights), `Education`, `Skill`, `Proje
 ![SQLite](https://img.shields.io/badge/SQLite-file%3Adev.db-003B57?logo=sqlite)
 ![NextAuth.js](https://img.shields.io/badge/NextAuth.js-4-000000)
 
-Runtime dependencies also include `bcryptjs` and `lucide-react`.
-
 ## Quick start
 
 **Requirements:** Node.js 18+ and npm.
@@ -34,18 +36,14 @@ Runtime dependencies also include `bcryptjs` and `lucide-react`.
 git clone https://github.com/kyawzawhein-qa/portfolio.git
 cd portfolio
 npm install
-```
-
-Copy [`.env.example`](.env.example) to `.env` in the project root, fill in your local values, then initialize the database and seed sample QA portfolio content:
-
-```bash
+cp .env.example .env
 npm run prisma:generate
 npm run prisma:db-push
 npm run prisma:seed
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Sign in at [http://localhost:3000/login](http://localhost:3000/login) to reach `/admin`.
+Open [http://localhost:3000](http://localhost:3000). Sign in at `/login` to reach `/admin`.
 
 Other scripts: `npm run build`, `npm run start`, `npm run lint`.
 
@@ -54,21 +52,28 @@ Other scripts: `npm run build`, `npm run start`, `npm run lint`.
 | Variable | Purpose |
 | --- | --- |
 | `DATABASE_URL` | Prisma SQLite URL, e.g. `file:./dev.db` |
-| `NEXTAUTH_URL` | App URL for NextAuth, e.g. `http://localhost:3000` |
-| `NEXTAUTH_SECRET` | Session signing secret (generate a long random string for local/dev) |
-| `ADMIN_EMAIL` | Admin **username** accepted at login (not necessarily an email address) |
-| `ADMIN_PASSWORD` | Plain admin password when `ADMIN_PASSWORD_HASH` is unset |
-| `ADMIN_PASSWORD_HASH` | Optional bcrypt hash; when set, login verifies against this instead of `ADMIN_PASSWORD` |
+| `NEXTAUTH_URL` | App URL for NextAuth |
+| `NEXTAUTH_SECRET` | Session signing secret |
+| `ADMIN_EMAIL` | Admin username at login |
+| `ADMIN_PASSWORD` | Plain password when hash is unset |
+| `ADMIN_PASSWORD_HASH` | Optional bcrypt hash |
+| `VISITOR_HASH_SALT` | Salt for visitor IP hashing (required in production) |
+| `NEXT_PUBLIC_SITE_URL` | Canonical/RSS base URL |
 
-**Before any public deploy:** set strong, unique `NEXTAUTH_SECRET`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` (or `ADMIN_PASSWORD_HASH`). Never commit real secrets or rely on unconfigured `lib/auth.ts` fallbacks.
+**Before any public deploy:** set strong, unique secrets. Never commit `.env`.
 
-### Local admin (dev only)
+### Playwright smoke tests
 
-If you do not set `ADMIN_EMAIL`, `ADMIN_PASSWORD`, or `ADMIN_PASSWORD_HASH` in `.env`, `lib/auth.ts` uses **unconfigured local fallbacks** for private dogfooding on your machine. Inspect that file locally if you need the defaults; do not copy those values into docs, commits, or public deploys.
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
 
-Override auth via `.env` (and rotate secrets) before deploying anywhere public. The login form label says “email” but authentication matches `ADMIN_EMAIL` as the username.
+## Deploy
 
-## Repository
+GitHub Actions (SCP + PM2):
 
-- **Description:** Personal site — kyawzawhein.com  
-- **Default branch:** `qa` (staging deploy); `main` tracks production per `.github/workflows/deploy.yml`.
+- `main` → `kyawzawhein.com` (port 3000)
+- `qa` → `test.kyawzawhein.com` (port 3001)
+
+Default branch for staging is `qa`; `main` tracks production.

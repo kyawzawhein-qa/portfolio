@@ -19,9 +19,11 @@ jobs:
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             echo "TARGET_DIR=/var/www/kyawzawhein.com" >> $GITHUB_ENV
             echo "PM2_NAME=portfolio-main" >> $GITHUB_ENV
+            echo "APP_PORT=3000" >> $GITHUB_ENV
           elif [[ "${{ github.ref }}" == "refs/heads/qa" ]]; then
             echo "TARGET_DIR=/var/www/test.kyawzawhein.com" >> $GITHUB_ENV
             echo "PM2_NAME=portfolio-qa" >> $GITHUB_ENV
+            echo "APP_PORT=3001" >> $GITHUB_ENV
           fi
 
       - name: 🚀 Copy files to VPS via SCP
@@ -44,13 +46,15 @@ jobs:
             cd ${{ env.TARGET_DIR }}
             # .env ဖိုင် မရှိသေးပါက အလိုအလျောက် ဖန်တီးပေးရန်
             if [ ! -f .env ]; then cp .env.example .env; fi
-            
+            mkdir -p public/uploads
+
             # Packages များသွင်းပြီး Build လုပ်ရန်
             npm install
             npx prisma generate
             npx prisma db push
             npm run build
-            
-            # PM2 ဖြင့် အသက်သွင်းရန်
-            pm2 restart ${{ env.PM2_NAME }} || pm2 start npm --name "${{ env.PM2_NAME }}" -- start
+
+            # PM2 ဖြင့် အသက်သွင်းရန် (qa=test site on port 3001)
+            export PORT=${{ env.APP_PORT }}
+            pm2 restart ${{ env.PM2_NAME }} || pm2 start npm --name "${{ env.PM2_NAME }}" -- start -- -p ${{ env.APP_PORT }}
             pm2 save
