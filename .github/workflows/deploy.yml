@@ -19,11 +19,11 @@ jobs:
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             echo "TARGET_DIR=/var/www/kyawzawhein.com" >> $GITHUB_ENV
             echo "PM2_NAME=portfolio-main" >> $GITHUB_ENV
-            echo "APP_PORT=3000" >> $GITHUB_ENV
+            echo "APP_PORT=3001" >> $GITHUB_ENV
           elif [[ "${{ github.ref }}" == "refs/heads/qa" ]]; then
             echo "TARGET_DIR=/var/www/test.kyawzawhein.com" >> $GITHUB_ENV
             echo "PM2_NAME=portfolio-qa" >> $GITHUB_ENV
-            echo "APP_PORT=3001" >> $GITHUB_ENV
+            echo "APP_PORT=3000" >> $GITHUB_ENV
           fi
 
       - name: 🚀 Copy files to VPS via SCP

@@ -73,7 +73,7 @@ npm run test:e2e
 
 GitHub Actions (SCP + PM2):
 
-- `main` → `kyawzawhein.com` (port 3000)
-- `qa` → `test.kyawzawhein.com` (port 3001)
+- `main` → `kyawzawhein.com` (port 3001, `portfolio-main`)
+- `qa` → `test.kyawzawhein.com` (port 3000, `portfolio-qa`)
 
 Default branch for staging is `qa`; `main` tracks production.
