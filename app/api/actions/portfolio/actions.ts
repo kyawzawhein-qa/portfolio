@@ -41,10 +41,14 @@ async function saveUpload(file: File | null, prefix: string) {
 export async function updateProfile(formData: FormData) {
   await requireAdmin();
   const id = await getProfileId();
+  const existing = await prisma.profile.findUnique({
+    where: { id },
+    select: { profileImage: true, resumeUrl: true }
+  });
   const uploadedImage = await saveUpload(formData.get("profileImageFile") as File | null, "profile");
   const uploadedResume = await saveUpload(formData.get("resumeFile") as File | null, "resume");
-  const imageUrl = String(formData.get("profileImage") || "") || null;
-  const resumeUrl = String(formData.get("resumeUrl") || "") || null;
+  const imageUrl = String(formData.get("profileImage") || "").trim();
+  const resumeUrl = String(formData.get("resumeUrl") || "").trim();
 
   await prisma.profile.update({
     where: { id },
@@ -54,10 +58,10 @@ export async function updateProfile(formData: FormData) {
       email: String(formData.get("email") || ""),
       phone: String(formData.get("phone") || "") || null,
       location: String(formData.get("location") || "") || null,
-      profileImage: uploadedImage || imageUrl,
+      profileImage: uploadedImage || imageUrl || existing?.profileImage || null,
       linkedinUrl: String(formData.get("linkedinUrl") || "") || null,
       githubUrl: String(formData.get("githubUrl") || "") || null,
-      resumeUrl: uploadedResume || resumeUrl,
+      resumeUrl: uploadedResume || resumeUrl || existing?.resumeUrl || null,
       heroTags: stringifyHeroTags(formData.get("heroTags")),
       intro: String(formData.get("intro") || ""),
       summary: String(formData.get("summary") || "")

@@ -146,6 +146,7 @@ body {
 
 .profile-image-wrapper img {
   @apply w-full h-full object-cover;
+  object-position: center top;
   transition: transform 0.3s ease;
 }
 
@@ -306,3 +307,43 @@ p {
 .section:nth-child(7) { animation-delay: 0.7s; }
 .section:nth-child(8) { animation-delay: 0.8s; }
 .section:nth-child(9) { animation-delay: 0.9s; }
+
+.blog-prose {
+  @apply space-y-4 text-slate-300 leading-7;
+}
+
+.blog-prose h2 {
+  @apply mt-8 text-lg font-semibold normal-case tracking-normal text-white;
+}
+
+.blog-prose h3 {
+  @apply mt-6 text-base font-semibold normal-case tracking-normal text-cyan-200;
+}
+
+.blog-prose p {
+  @apply text-slate-300;
+}
+
+.blog-prose blockquote {
+  @apply border-l-4 border-cyan-500/50 bg-slate-950/60 px-4 py-3 text-slate-200;
+}
+
+.blog-prose code {
+  @apply rounded bg-slate-950 px-1.5 py-0.5 font-mono text-sm text-cyan-200;
+}
+
+.blog-prose pre {
+  @apply overflow-x-auto rounded-xl border border-slate-800 bg-slate-950 p-4 text-sm text-slate-200;
+}
+
+.blog-prose ul {
+  @apply list-disc space-y-2 pl-6;
+}
+
+.blog-prose ol {
+  @apply list-decimal space-y-2 pl-6;
+}
+
+.visitor-counter {
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.12);
+}

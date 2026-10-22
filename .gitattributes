@@ -1,0 +1,2 @@
+# Avoid echoing tracked env file contents in diffs (security).
+.env -diff

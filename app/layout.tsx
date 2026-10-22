@@ -2,6 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Space_Grotesk, IBM_Plex_Sans } from "next/font/google";
+import SiteHeader from "@/components/SiteHeader";
+import VisitorRecorder from "@/components/VisitorRecorder";
+import { getUniqueVisitorCount } from "@/lib/visitors";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
@@ -16,7 +19,8 @@ const body = IBM_Plex_Sans({
   display: "swap"
 });
 
-const siteUrl = process.env.NEXTAUTH_URL || "https://kyawzawhein.com";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "https://kyawzawhein.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -31,7 +35,10 @@ export const metadata: Metadata = {
   creator: "Kyaw Zaw Hein",
   publisher: "Kyaw Zaw Hein",
   alternates: {
-    canonical: "/"
+    canonical: "/",
+    types: {
+      "application/rss+xml": [{ url: "/feed.xml", title: "Kyaw Zaw Hein — Blog RSS" }]
+    }
   },
   openGraph: {
     type: "website",
@@ -65,12 +72,18 @@ const jsonLd = {
   sameAs: ["https://linkedin.com/in/kyawzawhein", "https://github.com/kyawzawhein"]
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const visitorCount = await getUniqueVisitorCount();
+
   return (
     <html lang="en" className={`dark ${display.variable} ${body.variable}`}>
       <body className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 font-sans antialiased">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <main className="mx-auto max-w-6xl px-4 py-10 md:px-8">{children}</main>
+        <main className="mx-auto max-w-6xl px-4 py-10 md:px-8">
+          <SiteHeader visitorCount={visitorCount} />
+          {children}
+        </main>
+        <VisitorRecorder />
       </body>
     </html>
   );
