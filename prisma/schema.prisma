@@ -107,6 +107,19 @@ model Certification {
   profileId  Int
 }
 
+model BlogPost {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  description String   @default("")
+  content     String
+  /// Display date (YYYY-MM-DD), aligned with filesystem frontmatter.
+  date        String
+  draft       Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 /// Privacy-safe unique visitors (stores SHA-256 hash of IP + salt, never raw IP).
 model UniqueVisitor {
   id         Int      @id @default(autoincrement())

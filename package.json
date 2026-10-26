@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "typecheck": "tsc --noEmit",
     "prisma:generate": "prisma generate",
     "prisma:db-push": "prisma db push",
     "prisma:seed": "node prisma/seed.cjs"
@@ -21,9 +24,14 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^10.1.0",
+    "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@testing-library/react": "^16.0.0",
+    "jsdom": "^25.0.0",
+    "vitest": "^2.1.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.14.2",
     "@types/react": "^18.3.3",
