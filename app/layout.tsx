@@ -5,6 +5,8 @@ import SiteHeader from "@/components/SiteHeader";
 import VisitorRecorder from "@/components/VisitorRecorder";
 import { getUniqueVisitorCount } from "@/lib/visitors";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Kyaw Zaw Hein | QA Engineer",
   description: "Experienced QA Engineer specializing in test automation, FinTech, and quality engineering.",

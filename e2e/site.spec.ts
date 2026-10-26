@@ -11,6 +11,36 @@ test.describe("portfolio regression", () => {
     await expect(page).toHaveURL(/\/blog$/);
   });
 
+  test("visitor counter stays non-zero across client navigations", async ({ page }) => {
+    await page.goto("/");
+
+    const counter = page.locator(".visitor-counter");
+    await expect(counter).toBeVisible();
+
+    const readCount = async () => {
+      const label = await counter.getAttribute("aria-label");
+      const match = label?.match(/^(\d+) unique visitors$/);
+      return match ? Number(match[1]) : 0;
+    };
+
+    await expect.poll(readCount, { timeout: 10_000 }).toBeGreaterThan(0);
+    const baseline = await readCount();
+
+    await page.getByRole("link", { name: "Blog" }).click();
+    await expect(page).toHaveURL(/\/blog$/);
+    await expect.poll(readCount).toBeGreaterThan(0);
+    expect(await readCount()).toBe(baseline);
+
+    await page.getByRole("link", { name: "Portfolio" }).click();
+    await expect(page).toHaveURL(/\/$/);
+    await expect.poll(readCount).toBeGreaterThan(0);
+    expect(await readCount()).toBe(baseline);
+
+    await page.getByRole("button", { name: "Toggle theme" }).click();
+    await expect.poll(readCount).toBeGreaterThan(0);
+    expect(await readCount()).toBe(baseline);
+  });
+
   test("visitor counter does not double-count on repeat visit", async ({ page, context }) => {
     await page.goto("/");
     const counter = page.locator("text=/visitor/i").first();

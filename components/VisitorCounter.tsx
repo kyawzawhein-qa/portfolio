@@ -1,53 +1,132 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Users } from "lucide-react";
 
 type VisitorCounterProps = {
   initialCount: number;
 };
 
+const DISPLAY_STORAGE_KEY = "kzh_visitor_count_display";
+
 function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
 
+function readStoredCount(): number {
+  if (typeof window === "undefined") return 0;
+  const raw = sessionStorage.getItem(DISPLAY_STORAGE_KEY);
+  const parsed = raw ? Number(raw) : NaN;
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+}
+
+function persistCount(count: number) {
+  if (typeof window === "undefined") return;
+  sessionStorage.setItem(DISPLAY_STORAGE_KEY, String(count));
+}
+
+function resolveStartingCount(initialCount: number): number {
+  return Math.max(initialCount, readStoredCount());
+}
+
 export default function VisitorCounter({ initialCount }: VisitorCounterProps) {
-  const [display, setDisplay] = useState(0);
-  const displayRef = useRef(0);
+  const pathname = usePathname();
+  const [display, setDisplay] = useState(initialCount);
+  const displayRef = useRef(initialCount);
   const rafRef = useRef<number | null>(null);
 
-  const animateTo = useCallback((target: number) => {
-    const from = displayRef.current;
-    const start = performance.now();
-    const duration = 1400;
-
-    const tick = (now: number) => {
-      const progress = Math.min(1, (now - start) / duration);
-      const value = Math.round(from + (target - from) * easeOutCubic(progress));
-      displayRef.current = value;
-      setDisplay(value);
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(tick);
-      }
-    };
-
+  const setCountImmediate = useCallback((target: number) => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(tick);
+    displayRef.current = target;
+    setDisplay(target);
+    persistCount(target);
   }, []);
 
+  const animateTo = useCallback(
+    (target: number) => {
+      if (target === displayRef.current) {
+        persistCount(target);
+        return;
+      }
+
+      const from = displayRef.current;
+      const start = performance.now();
+      const duration = 1400;
+
+      const tick = (now: number) => {
+        const progress = Math.min(1, (now - start) / duration);
+        const value = Math.round(from + (target - from) * easeOutCubic(progress));
+        displayRef.current = value;
+        setDisplay(value);
+        if (progress < 1) {
+          rafRef.current = requestAnimationFrame(tick);
+        } else {
+          persistCount(target);
+        }
+      };
+
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(tick);
+    },
+    []
+  );
+
+  const applyServerCount = useCallback(
+    (target: number) => {
+      if (typeof target !== "number" || target < 0) return;
+      if (displayRef.current === 0 && target > 0) {
+        animateTo(target);
+        return;
+      }
+      if (target !== displayRef.current) {
+        animateTo(target);
+        return;
+      }
+      persistCount(target);
+    },
+    [animateTo]
+  );
+
+  useLayoutEffect(() => {
+    const restored = resolveStartingCount(initialCount);
+    if (restored !== displayRef.current) {
+      setCountImmediate(restored);
+    }
+  }, [initialCount, setCountImmediate]);
+
   useEffect(() => {
-    animateTo(initialCount);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialCount]);
+    applyServerCount(initialCount);
+  }, [initialCount, applyServerCount]);
 
   useEffect(() => {
     const onRecorded = (event: Event) => {
       const detail = (event as CustomEvent<{ count: number }>).detail;
-      if (typeof detail?.count === "number") animateTo(detail.count);
+      if (typeof detail?.count === "number") applyServerCount(detail.count);
     };
     window.addEventListener("kzh:visitor-count", onRecorded);
     return () => window.removeEventListener("kzh:visitor-count", onRecorded);
-  }, [animateTo]);
+  }, [applyServerCount]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch("/api/visitors/record", { method: "GET", credentials: "same-origin" })
+      .then((res) => res.json())
+      .then((data: { count?: number }) => {
+        if (!cancelled && typeof data.count === "number") {
+          applyServerCount(data.count);
+        }
+      })
+      .catch(() => {
+        const stored = readStoredCount();
+        if (!cancelled && stored > 0) setCountImmediate(stored);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [pathname, applyServerCount, setCountImmediate]);
 
   const digits = String(Math.max(0, display)).padStart(1, "0");
 
