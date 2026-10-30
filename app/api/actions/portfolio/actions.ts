@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { prisma } from "@/lib/prisma";
+import { requireAdminAction } from "@/lib/requireAdmin";
 
 async function getProfileId() {
   const profile = await prisma.profile.findFirst({
@@ -28,6 +29,7 @@ async function saveProfileImage(file: File | null) {
 }
 
 export async function updateProfile(formData: FormData) {
+  await requireAdminAction();
   const id = await getProfileId();
   const uploadedImage = await saveProfileImage(formData.get("profileImageFile") as File | null);
   const imageUrl = String(formData.get("profileImage") || "") || null;
@@ -50,6 +52,7 @@ export async function updateProfile(formData: FormData) {
 }
 
 export async function createExperience(formData: FormData) {
+  await requireAdminAction();
   const profileId = await getProfileId();
   const endDateRaw = String(formData.get("endDate") || "");
   const highlightLines = String(formData.get("highlights") || "")
@@ -83,6 +86,7 @@ export async function createExperience(formData: FormData) {
 }
 
 export async function updateExperience(formData: FormData) {
+  await requireAdminAction();
   const id = Number(formData.get("id"));
   const endDateRaw = String(formData.get("endDate") || "");
   const highlightLines = String(formData.get("highlights") || "")
@@ -120,12 +124,14 @@ export async function updateExperience(formData: FormData) {
 }
 
 export async function deleteExperience(formData: FormData) {
+  await requireAdminAction();
   await prisma.experience.delete({ where: { id: Number(formData.get("id")) } });
   revalidatePath("/");
   revalidatePath("/admin");
 }
 
 export async function createEducation(formData: FormData) {
+  await requireAdminAction();
   const profileId = await getProfileId();
   await prisma.education.create({
     data: {
@@ -141,6 +147,7 @@ export async function createEducation(formData: FormData) {
 }
 
 export async function updateEducation(formData: FormData) {
+  await requireAdminAction();
   await prisma.education.update({
     where: { id: Number(formData.get("id")) },
     data: {
@@ -155,12 +162,14 @@ export async function updateEducation(formData: FormData) {
 }
 
 export async function deleteEducation(formData: FormData) {
+  await requireAdminAction();
   await prisma.education.delete({ where: { id: Number(formData.get("id")) } });
   revalidatePath("/");
   revalidatePath("/admin");
 }
 
 export async function createSkill(formData: FormData) {
+  await requireAdminAction();
   const profileId = await getProfileId();
   await prisma.skill.create({
     data: {
@@ -175,6 +184,7 @@ export async function createSkill(formData: FormData) {
 }
 
 export async function updateSkill(formData: FormData) {
+  await requireAdminAction();
   await prisma.skill.update({
     where: { id: Number(formData.get("id")) },
     data: {
@@ -188,6 +198,7 @@ export async function updateSkill(formData: FormData) {
 }
 
 export async function deleteSkill(formData: FormData) {
+  await requireAdminAction();
   await prisma.skill.delete({ where: { id: Number(formData.get("id")) } });
   revalidatePath("/");
   revalidatePath("/admin");
