@@ -6,6 +6,8 @@ import SiteHeader from "@/components/SiteHeader";
 import VisitorRecorder from "@/components/VisitorRecorder";
 import { getUniqueVisitorCount } from "@/lib/visitors";
 
+export const dynamic = "force-dynamic";
+
 const display = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",

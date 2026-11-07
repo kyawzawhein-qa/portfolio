@@ -1,6 +1,6 @@
 # Kyaw Zaw Hein — Personal Site
 
-**Live at [kyawzawhein.com](https://kyawzawhein.com)** — a QA engineer portfolio with a CMS-style admin panel, Markdown blog, unique visitor counter, and Playwright smoke tests.
+**Live at [kyawzawhein.com](https://kyawzawhein.com)** — a QA engineer portfolio with a CMS-style admin panel, DB-backed blog editor, unique visitor counter, and Playwright smoke tests.
 
 Maintained by [Kyaw Zaw Hein](https://github.com/kyawzawhein-qa) (`kyawzawhein-qa`).
 
@@ -9,14 +9,15 @@ Maintained by [Kyaw Zaw Hein](https://github.com/kyawzawhein-qa) (`kyawzawhein-q
 | Route | Purpose |
 | --- | --- |
 | [`/`](https://kyawzawhein.com) | Public portfolio (SQLite via Prisma): hero, metrics, market signals, capability map, skills, projects, experience flip-cards, education, testimonials, certifications, contact form. Light/dark theme toggle. |
-| [`/blog`](https://kyawzawhein.com/blog) | Markdown posts from `content/blog` |
+| [`/blog`](https://kyawzawhein.com/blog) | Public blog — merged database posts (admin CMS) and Markdown under `content/blog` |
 | [`/feed.xml`](https://kyawzawhein.com/feed.xml) | Blog RSS feed |
 | [`/login`](https://kyawzawhein.com/login) | NextAuth credentials sign-in |
 | [`/admin`](https://kyawzawhein.com/admin) | Session-protected dashboard with `requireAdmin()` on mutations: profile (image/resume upload), projects, experience, education, skills, metrics, market signals, delivery map, testimonials, certifications, contact inbox |
+| [`/admin/blog`](https://kyawzawhein.com/admin/blog) | Blog CMS — create/edit Markdown posts with preview, slug validation, draft/publish |
 
 **SEO:** Open Graph metadata, robots, sitemap, Person JSON-LD, RSS alternate link.
 
-**Visitor counter:** hashed IPs with `VISITOR_HASH_SALT` (`UniqueVisitor` model).
+**Visitor counter:** hashed IPs with `VISITOR_HASH_SALT` (`UniqueVisitor` model); display survives client navigations via session storage and server sync.
 
 ## Tech stack
 
@@ -27,6 +28,8 @@ Maintained by [Kyaw Zaw Hein](https://github.com/kyawzawhein-qa) (`kyawzawhein-q
 ![Prisma](https://img.shields.io/badge/Prisma-5-2D3748?logo=prisma)
 ![SQLite](https://img.shields.io/badge/SQLite-file%3Adev.db-003B57?logo=sqlite)
 ![NextAuth.js](https://img.shields.io/badge/NextAuth.js-4-000000)
+
+Runtime dependencies also include `bcryptjs`, `lucide-react`, `gray-matter`, and `rehype-sanitize` for blog rendering.
 
 ## Quick start
 
@@ -45,7 +48,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). Sign in at `/login` to reach `/admin`.
 
-Other scripts: `npm run build`, `npm run start`, `npm run lint`.
+Other scripts: `npm run build`, `npm run start`, `npm run lint`, `npm run test`, `npm run typecheck`.
 
 ### Environment variables
 

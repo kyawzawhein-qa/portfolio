@@ -1,7 +1,5 @@
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import Link from "next/link";
 import { parseJsonStringArray } from "@/lib/parse";
 import {
   createCertification,
@@ -35,9 +33,9 @@ import {
   updateSkill,
   updateTestimonial
 } from "@/app/api/actions/portfolio/actions";
-import { SignOutButton } from "@/components/admin/SignOutButton";
 import {
   BriefcaseBusiness,
+  FileText,
   FolderGit2,
   GraduationCap,
   ImagePlus,
@@ -66,9 +64,6 @@ const dangerBtn =
   "inline-flex items-center justify-center gap-2 rounded-lg border border-rose-500/40 px-3 py-2 text-sm text-rose-300 hover:bg-rose-500/10";
 
 export default async function AdminPage() {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect("/login");
-
   const profile = await prisma.profile.findFirst({
     include: {
       experiences: { orderBy: { order: "asc" }, include: { highlights: { orderBy: { order: "asc" } } } },
@@ -115,7 +110,13 @@ export default async function AdminPage() {
             Add, update, or delete every public section — including Playwright demo GitHub links.
           </p>
         </div>
-        <SignOutButton />
+        <Link
+          href="/admin/blog"
+          className="inline-flex items-center gap-2 rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-100 hover:bg-cyan-500/20"
+        >
+          <FileText className="h-4 w-4" />
+          Manage blog
+        </Link>
       </header>
 
       <nav className="flex flex-wrap gap-2 text-xs">

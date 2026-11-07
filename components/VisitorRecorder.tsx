@@ -15,7 +15,8 @@ export default function VisitorRecorder() {
     fetch("/api/visitors/record", { method: "POST", credentials: "same-origin" })
       .then((res) => res.json())
       .then((data: { count?: number }) => {
-        if (typeof data.count === "number") {
+        if (typeof data.count === "number" && data.count >= 0) {
+          sessionStorage.setItem("kzh_visitor_count_display", String(data.count));
           window.dispatchEvent(new CustomEvent("kzh:visitor-count", { detail: { count: data.count } }));
         }
       })

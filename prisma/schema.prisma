@@ -161,3 +161,16 @@ model UniqueVisitor {
   ipHash     String   @unique
   firstSeenAt DateTime @default(now())
 }
+
+model BlogPost {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  description String   @default("")
+  content     String
+  /// Display date (YYYY-MM-DD), aligned with filesystem frontmatter.
+  date        String
+  draft       Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
