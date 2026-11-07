@@ -27,7 +27,8 @@ export default async function BlogIndexPage() {
         </p>
         <h1 className="text-3xl font-bold text-white md:text-4xl">Writing & notes</h1>
         <p className="mt-3 max-w-2xl text-slate-400">
-          QA engineering notes on test automation, delivery practices, and quality leadership.
+          QA engineering notes on test automation, delivery practices, and quality leadership. Posts may be authored in
+          the admin CMS or stored as Markdown under <code className="text-cyan-200">content/blog</code>.
         </p>
       </section>
 

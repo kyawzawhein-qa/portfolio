@@ -9,4 +9,7 @@ prisma/dev.db
 prisma/dev.db-journal
 test-results/
 playwright-report/
-
+public/uploads/*
+!public/uploads/.gitkeep
+/blob-report/
+/playwright/.cache/

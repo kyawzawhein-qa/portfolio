@@ -38,7 +38,9 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <article className="space-y-6">
       <div className="glass-card p-8">
-        <Link href="/blog" className="text-sm text-cyan-300 hover:text-cyan-200">← Back to blog</Link>
+        <Link href="/blog" className="text-sm text-cyan-300 hover:text-cyan-200">
+          ← Back to blog
+        </Link>
         <h1 className="mt-4 text-3xl font-bold text-white md:text-4xl">{post.title}</h1>
         {post.description ? <p className="mt-3 text-slate-400">{post.description}</p> : null}
         {post.date ? <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-500">{post.date}</p> : null}
