@@ -2,12 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Dark mode support */
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --accent: #0e7490;
+  --border: #cbd5e1;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #475569;
+  --background-rgb: 248 250 252;
+  --foreground-rgb: 15 23 42;
+  --accent-rgb: 14 116 144;
+  --border-rgb: 203 213 225;
+  --card-rgb: 255 255 255;
+  --card-foreground-rgb: 15 23 42;
+  --muted-rgb: 241 245 249;
+  --muted-foreground-rgb: 71 85 105;
+  --shadow-card: 0 20px 40px rgba(15, 23, 42, 0.08);
+  --hero-grid: rgba(14, 116, 144, 0.14);
+}
+
 .dark {
   --background: #020617;
   --foreground: #e2e8f0;
   --accent: #22d3ee;
   --border: #1e293b;
+  --card: #0f172a;
+  --card-foreground: #e2e8f0;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --background-rgb: 2 6 23;
+  --foreground-rgb: 226 232 240;
+  --accent-rgb: 34 211 238;
+  --border-rgb: 30 41 59;
+  --card-rgb: 15 23 42;
+  --card-foreground-rgb: 226 232 240;
+  --muted-rgb: 30 41 59;
+  --muted-foreground-rgb: 148 163 184;
+  --shadow-card: 0 20px 40px rgba(2, 6, 23, 0.75);
+  --hero-grid: rgba(56, 189, 248, 0.08);
 }
 
 body {
@@ -16,28 +50,29 @@ body {
 
 .hero-grid {
   background-image:
-    linear-gradient(to right, rgba(56, 189, 248, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, var(--hero-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hero-grid) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
 .glass-card {
-  @apply rounded-2xl border border-slate-800 bg-slate-900/60 shadow-card backdrop-blur;
+  @apply rounded-2xl border border-border shadow-card backdrop-blur;
+  background-color: color-mix(in srgb, var(--card) 92%, transparent);
   transition: all 0.3s ease;
 }
 
 .glass-card:hover {
-  @apply border-slate-700 bg-slate-900/80 shadow-lg;
+  @apply border-accent/30 shadow-lg;
   transform: translateY(-2px);
 }
 
-/* Dark mode glass card */
 .dark .glass-card {
-  @apply border-slate-600 bg-slate-900/50;
+  background-color: color-mix(in srgb, var(--card) 60%, transparent);
 }
 
 .dark .glass-card:hover {
-  @apply border-slate-500 bg-slate-900/60 shadow-xl;
+  @apply border-accent/40 shadow-xl;
+  background-color: color-mix(in srgb, var(--card) 70%, transparent);
 }
 
 /* Animations */
@@ -76,6 +111,19 @@ body {
 
 @keyframes pulse-glow {
   0%, 100% {
+    box-shadow: 0 0 20px rgba(14, 116, 144, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(14, 116, 144, 0.35);
+  }
+}
+
+.dark .visitor-counter {
+  animation-name: pulse-glow-dark;
+}
+
+@keyframes pulse-glow-dark {
+  0%, 100% {
     box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
   }
   50% {
@@ -106,6 +154,10 @@ body {
 
 .animate-pulse-glow {
   animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.dark .animate-pulse-glow {
+  animation: pulse-glow-dark 3s ease-in-out infinite;
 }
 
 .animate-float {
@@ -141,7 +193,7 @@ body {
 
 /* Profile image styles */
 .profile-image-wrapper {
-  @apply relative overflow-hidden rounded-2xl border-2 border-cyan-500/30;
+  @apply relative overflow-hidden rounded-2xl border-2 border-accent/40;
 }
 
 .profile-image-wrapper img {
@@ -154,22 +206,14 @@ body {
   transform: scale(1.05);
 }
 
-/* Dark mode profile image */
-.dark .profile-image-wrapper {
-  @apply border-cyan-500/40;
-}
-
 /* Form styles */
-input, textarea {
-  @apply w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none ring-cyan-400 focus:ring focus:border-cyan-500 transition-colors duration-200;
+input,
+textarea {
+  @apply w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground outline-none ring-accent/40 focus:ring focus:border-accent transition-colors duration-200;
 }
 
-.dark input, .dark textarea {
-  @apply border-slate-600 bg-slate-900/70;
-}
-
-.dark input:focus, .dark textarea:focus {
-  @apply ring-cyan-400 border-cyan-500;
+label {
+  @apply text-foreground;
 }
 
 /* Button styles */
@@ -184,62 +228,29 @@ a {
 
 /* Responsive typography */
 h1 {
-  @apply text-4xl font-bold tracking-tight text-white md:text-5xl;
+  @apply text-4xl font-bold tracking-tight text-foreground md:text-5xl;
 }
 
 h2 {
-  @apply text-xl font-semibold text-cyan-300;
+  @apply text-xl font-semibold text-accent;
 }
 
 h3 {
-  @apply text-sm font-semibold text-slate-400 uppercase tracking-[0.2em];
+  @apply text-sm font-semibold text-muted-foreground uppercase tracking-[0.2em];
 }
 
 p {
-  @apply text-slate-300 leading-7;
-}
-
-/* Dark mode text adjustments */
-.dark h1 {
-  @apply text-white;
-}
-
-.dark h2 {
-  @apply text-cyan-300;
-}
-
-.dark h3 {
-  @apply text-slate-400;
-}
-
-.dark p {
-  @apply text-slate-300;
+  @apply text-foreground/90 leading-7;
 }
 
 /* Skill tags */
 .skill-tag {
-  @apply rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-200 transition-all hover:border-cyan-400 hover:bg-cyan-500/10 hover:text-cyan-300;
-}
-
-.dark .skill-tag {
-  @apply border-slate-600 bg-slate-900/60;
-}
-
-.dark .skill-tag:hover {
-  @apply border-cyan-400 bg-cyan-500/20 text-cyan-300;
+  @apply rounded-full border border-border bg-muted px-3 py-1 text-sm text-foreground transition-all hover:border-accent hover:bg-accent/10 hover:text-accent;
 }
 
 /* Metric cards */
 .metric-card {
-  @apply rounded-xl border border-slate-800 bg-slate-900 p-3 transition-all hover:border-cyan-500/50 hover:bg-slate-800;
-}
-
-.dark .metric-card {
-  @apply border-slate-600 bg-slate-900/70;
-}
-
-.dark .metric-card:hover {
-  @apply border-cyan-500/30 bg-slate-800/80;
+  @apply rounded-xl border border-border bg-muted p-3 transition-all hover:border-accent/50 hover:bg-card;
 }
 
 /* Experience flip cards */
@@ -272,26 +283,27 @@ p {
 }
 
 .experience-flip-face {
-  @apply absolute inset-0 flex flex-col rounded-xl border border-slate-800 bg-slate-950/80 p-5 shadow-card;
+  @apply absolute inset-0 flex flex-col rounded-xl border border-border p-5 shadow-card;
+  background-color: color-mix(in srgb, var(--card) 95%, transparent);
   backface-visibility: hidden;
 }
 
 .experience-flip-front {
-  @apply hover:border-cyan-500/40;
+  @apply hover:border-accent/40;
 }
 
 .experience-flip-back {
-  @apply border-cyan-500/30 bg-slate-950;
+  @apply border-accent/30 bg-card;
   transform: rotateY(180deg);
 }
 
 .experience-flip-scroll {
-  @apply block space-y-3 overflow-y-auto pr-2 text-sm leading-6 text-slate-300;
+  @apply block space-y-3 overflow-y-auto pr-2 text-sm leading-6 text-foreground/85;
   max-height: 330px;
 }
 
 .experience-flip-bullet {
-  @apply flex gap-2 rounded-lg border border-slate-800 bg-slate-900/70 p-3;
+  @apply flex gap-2 rounded-lg border border-border bg-muted p-3;
 }
 
 /* Section spacing */
@@ -309,31 +321,31 @@ p {
 .section:nth-child(9) { animation-delay: 0.9s; }
 
 .blog-prose {
-  @apply space-y-4 text-slate-300 leading-7;
+  @apply space-y-4 text-foreground/90 leading-7;
 }
 
 .blog-prose h2 {
-  @apply mt-8 text-lg font-semibold normal-case tracking-normal text-white;
+  @apply mt-8 text-lg font-semibold normal-case tracking-normal text-foreground;
 }
 
 .blog-prose h3 {
-  @apply mt-6 text-base font-semibold normal-case tracking-normal text-cyan-200;
+  @apply mt-6 text-base font-semibold normal-case tracking-normal text-accent;
 }
 
 .blog-prose p {
-  @apply text-slate-300;
+  @apply text-foreground/90;
 }
 
 .blog-prose blockquote {
-  @apply border-l-4 border-cyan-500/50 bg-slate-950/60 px-4 py-3 text-slate-200;
+  @apply border-l-4 border-accent/50 bg-muted px-4 py-3 text-foreground/90;
 }
 
 .blog-prose code {
-  @apply rounded bg-slate-950 px-1.5 py-0.5 font-mono text-sm text-cyan-200;
+  @apply rounded bg-muted px-1.5 py-0.5 font-mono text-sm text-accent;
 }
 
 .blog-prose pre {
-  @apply overflow-x-auto rounded-xl border border-slate-800 bg-slate-950 p-4 text-sm text-slate-200;
+  @apply overflow-x-auto rounded-xl border border-border bg-muted p-4 text-sm text-foreground;
 }
 
 .blog-prose ul {
@@ -345,5 +357,9 @@ p {
 }
 
 .visitor-counter {
+  box-shadow: 0 0 24px rgba(14, 116, 144, 0.15);
+}
+
+.dark .visitor-counter {
   box-shadow: 0 0 24px rgba(34, 211, 238, 0.12);
 }

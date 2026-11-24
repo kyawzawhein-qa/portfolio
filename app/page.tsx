@@ -58,7 +58,7 @@ export default async function HomePage() {
     return (
       <div className="glass-card p-8 text-center">
         <h1 className="mb-2 text-2xl font-semibold">No profile data found</h1>
-        <p className="text-slate-400">Run seed script to populate initial portfolio data.</p>
+        <p className="text-muted-foreground">Run seed script to populate initial portfolio data.</p>
       </div>
     );
   }
@@ -78,43 +78,43 @@ export default async function HomePage() {
   return (
     <div className="space-y-6">
       <section className="hero-grid glass-card animate-fade-in-up overflow-hidden p-8">
-        <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-500/40 bg-cyan-500/10 px-3 py-1 text-xs uppercase tracking-wider text-cyan-300">
+        <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-500/40 bg-cyan-500/10 px-3 py-1 text-xs uppercase tracking-wider text-accent">
           <Sparkles className="h-4 w-4" />
           QA Engineer Portfolio
         </p>
         <div className="grid items-start gap-6 md:grid-cols-[1.2fr_1fr]">
           <div className="animate-slide-in-left">
-            <h1 className="font-display text-4xl font-bold tracking-tight text-white md:text-5xl">{profile.name}</h1>
-            <p className="mt-2 text-xl text-cyan-300">{profile.title}</p>
-            <p className="mt-4 max-w-3xl text-slate-300">{profile.intro}</p>
+            <h1 className="font-display text-4xl font-bold tracking-tight text-foreground md:text-5xl">{profile.name}</h1>
+            <p className="mt-2 text-xl text-accent">{profile.title}</p>
+            <p className="mt-4 max-w-3xl text-foreground/90">{profile.intro}</p>
             {heroTags.length > 0 ? (
               <div className="mt-5 grid gap-2 sm:grid-cols-3">
                 {heroTags.map((item) => (
                   <span
                     key={item}
-                    className="rounded-lg border border-slate-800 bg-slate-950/70 px-3 py-2 text-center text-xs font-semibold uppercase tracking-[0.16em] text-slate-300"
+                    className="rounded-lg border border-border bg-card/90 px-3 py-2 text-center text-xs font-semibold uppercase tracking-[0.16em] text-foreground/90"
                   >
                     {item}
                   </span>
                 ))}
               </div>
             ) : null}
-            <div className="mt-5 flex flex-wrap gap-4 text-sm text-slate-300">
+            <div className="mt-5 flex flex-wrap gap-4 text-sm text-foreground/90">
               <p className="inline-flex items-center gap-2">
-                <Mail className="h-4 w-4 text-cyan-300" />
-                <a href={`mailto:${profile.email}`} className="hover:text-cyan-300">
+                <Mail className="h-4 w-4 text-accent" />
+                <a href={`mailto:${profile.email}`} className="hover:text-accent">
                   {profile.email}
                 </a>
               </p>
               {profile.phone ? (
                 <p className="inline-flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-cyan-300" />
+                  <Phone className="h-4 w-4 text-accent" />
                   {profile.phone}
                 </p>
               ) : null}
               {profile.location ? (
                 <p className="inline-flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-cyan-300" />
+                  <MapPin className="h-4 w-4 text-accent" />
                   {profile.location}
                 </p>
               ) : null}
@@ -124,7 +124,7 @@ export default async function HomePage() {
                 href={resumeHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-lg bg-cyan-400 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+                className="rounded-lg bg-accent px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90 dark:text-slate-950"
               >
                 Download Resume
               </Link>
@@ -132,7 +132,7 @@ export default async function HomePage() {
                 href={linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-lg border border-cyan-500 bg-cyan-500/20 px-5 py-2 text-sm font-medium text-cyan-300 transition hover:bg-cyan-500/30"
+                className="flex items-center gap-2 rounded-lg border border-cyan-500 bg-cyan-500/20 px-5 py-2 text-sm font-medium text-accent transition hover:bg-cyan-500/30"
               >
                 LinkedIn
               </a>
@@ -140,7 +140,7 @@ export default async function HomePage() {
                 href={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-lg border border-cyan-500 bg-cyan-500/20 px-5 py-2 text-sm font-medium text-cyan-300 transition hover:bg-cyan-500/30"
+                className="rounded-lg border border-cyan-500 bg-cyan-500/20 px-5 py-2 text-sm font-medium text-accent transition hover:bg-cyan-500/30"
               >
                 GitHub
               </a>
@@ -154,19 +154,19 @@ export default async function HomePage() {
               </div>
             ) : null}
             {profile.metrics.length > 0 ? (
-              <div className="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
-                <p className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-slate-400">
-                  <ChartNoAxesCombined className="h-4 w-4 text-cyan-300" />
+              <div className="rounded-2xl border border-border bg-card p-4">
+                <p className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                  <ChartNoAxesCombined className="h-4 w-4 text-accent" />
                   Quality Snapshot
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   {profile.metrics.map((item) => (
                     <div
                       key={item.id}
-                      className="rounded-xl border border-slate-800 bg-slate-900 p-3 transition-all hover:border-cyan-500/50 hover:bg-slate-800"
+                      className="rounded-xl border border-border bg-muted p-3 transition-all hover:border-cyan-500/50 hover:bg-muted"
                     >
-                      <p className="text-lg font-semibold text-white">{item.value}</p>
-                      <p className="text-xs text-slate-400">{item.label}</p>
+                      <p className="text-lg font-semibold text-foreground">{item.value}</p>
+                      <p className="text-xs text-muted-foreground">{item.label}</p>
                     </div>
                   ))}
                 </div>
@@ -182,17 +182,17 @@ export default async function HomePage() {
             const Icon = signalIcons[index % signalIcons.length];
             const toneClass =
               signal.tone === "emerald"
-                ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+                ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
                 : signal.tone === "amber"
-                  ? "border-amber-500/30 bg-amber-500/10 text-amber-300"
-                  : "border-cyan-500/30 bg-cyan-500/10 text-cyan-300";
+                  ? "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300"
+                  : "border-cyan-500/30 bg-cyan-500/10 text-accent";
             return (
-              <article key={signal.id} className="rounded-xl border border-slate-800 bg-slate-950/70 p-5 transition hover:border-slate-600">
+              <article key={signal.id} className="rounded-xl border border-border bg-card/90 p-5 transition hover:border-accent/40">
                 <div className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg border ${toneClass}`}>
                   <Icon className="h-5 w-5" />
                 </div>
-                <h2 className="mb-2 text-base font-semibold normal-case tracking-normal text-white">{signal.title}</h2>
-                <p className="text-sm leading-6 text-slate-400">{signal.detail}</p>
+                <h2 className="mb-2 text-base font-semibold normal-case tracking-normal text-foreground">{signal.title}</h2>
+                <p className="text-sm leading-6 text-muted-foreground">{signal.detail}</p>
               </article>
             );
           })}
@@ -203,21 +203,21 @@ export default async function HomePage() {
         <section className="glass-card animate-fade-in-up p-6">
           <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
             <div>
-              <h2 className="mb-2 text-sm uppercase tracking-[0.2em] text-slate-400">QA Capability Map</h2>
-              <p className="max-w-3xl text-sm leading-6 text-slate-400">
+              <h2 className="mb-2 text-sm uppercase tracking-[0.2em] text-muted-foreground">QA Capability Map</h2>
+              <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
                 Where manual testing, automation, backend validation, and delivery process meet.
               </p>
             </div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-300">
               <ShieldCheck className="h-4 w-4" />
               Release quality focus
             </span>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             {profile.deliveryItems.map((item) => (
-              <article key={item.id} className="rounded-xl border border-slate-800 bg-slate-950/70 p-4">
-                <p className="mb-2 text-sm font-semibold text-white">{item.label}</p>
-                <p className="text-sm leading-6 text-slate-400">{item.value}</p>
+              <article key={item.id} className="rounded-xl border border-border bg-card/90 p-4">
+                <p className="mb-2 text-sm font-semibold text-foreground">{item.label}</p>
+                <p className="text-sm leading-6 text-muted-foreground">{item.value}</p>
               </article>
             ))}
           </div>
@@ -225,24 +225,24 @@ export default async function HomePage() {
       ) : null}
 
       <section className="glass-card animate-fade-in-up p-6">
-        <h2 className="mb-3 text-sm uppercase tracking-[0.2em] text-slate-400">Professional Summary</h2>
-        <p className="leading-7 text-slate-300">{profile.summary}</p>
+        <h2 className="mb-3 text-sm uppercase tracking-[0.2em] text-muted-foreground">Professional Summary</h2>
+        <p className="leading-7 text-foreground/90">{profile.summary}</p>
       </section>
 
       <section className="glass-card animate-fade-in-up p-6">
-        <h2 className="mb-4 text-sm uppercase tracking-[0.2em] text-slate-400">Skills</h2>
+        <h2 className="mb-4 text-sm uppercase tracking-[0.2em] text-muted-foreground">Skills</h2>
         <div className="grid gap-4 md:grid-cols-2">
           {Object.entries(groupedSkills).map(([category, names]) => (
             <article
               key={category}
-              className="animate-stagger rounded-xl border border-slate-800 bg-slate-950/70 p-4 transition-all hover:border-cyan-500/50 hover:bg-slate-950"
+              className="animate-stagger rounded-xl border border-border bg-card/90 p-4 transition-all hover:border-cyan-500/50 hover:bg-card"
             >
-              <p className="mb-2 text-xs uppercase tracking-[0.2em] text-cyan-300">{category}</p>
+              <p className="mb-2 text-xs uppercase tracking-[0.2em] text-accent">{category}</p>
               <div className="flex flex-wrap gap-2">
                 {names.map((name) => (
                   <span
                     key={`${category}-${name}`}
-                    className="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-200 transition-all hover:border-cyan-400 hover:bg-cyan-500/10 hover:text-cyan-300"
+                    className="skill-tag"
                   >
                     {name}
                   </span>
@@ -255,7 +255,7 @@ export default async function HomePage() {
 
       {profile.projects.length > 0 ? (
         <section className="glass-card animate-fade-in-up p-6">
-          <h2 className="mb-4 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-slate-400">
+          <h2 className="mb-4 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-muted-foreground">
             <Sparkles className="h-4 w-4" />
             Projects & Playwright Demos
           </h2>
@@ -283,15 +283,15 @@ export default async function HomePage() {
       <section className="glass-card animate-fade-in-up p-6">
         <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-slate-400">
+            <h2 className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-muted-foreground">
               <BriefcaseBusiness className="h-4 w-4" />
               Work Experience
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
               Select a card to flip from role snapshot to delivery details.
             </p>
           </div>
-          <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-300">
+          <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-accent">
             {profile.experiences.length} roles
           </span>
         </div>
@@ -302,42 +302,42 @@ export default async function HomePage() {
               <label htmlFor={`experience-${exp.id}`} className="experience-flip-label">
                 <span className="experience-flip-inner">
                   <span className="experience-flip-face experience-flip-front">
-                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 text-cyan-300">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 text-accent">
                       <BriefcaseBusiness className="h-5 w-5" />
                     </span>
                     <span className="block">
-                      <span className="mt-5 block text-2xl font-semibold leading-tight text-white">{exp.role}</span>
-                      <span className="mt-2 block text-base font-medium text-cyan-300">{exp.company}</span>
-                      <span className="mt-4 block rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-300">
+                      <span className="mt-5 block text-2xl font-semibold leading-tight text-foreground">{exp.role}</span>
+                      <span className="mt-2 block text-base font-medium text-accent">{exp.company}</span>
+                      <span className="mt-4 block rounded-full border border-border bg-card px-3 py-1 text-sm text-foreground/90">
                         {formatRange(exp.startDate, exp.endDate, exp.isCurrent)}
                       </span>
                     </span>
-                    {exp.description ? <span className="mt-5 block text-sm leading-6 text-slate-400">{exp.description}</span> : null}
-                    <span className="mt-auto inline-flex items-center justify-between rounded-lg border border-slate-800 bg-slate-950/80 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
+                    {exp.description ? <span className="mt-5 block text-sm leading-6 text-muted-foreground">{exp.description}</span> : null}
+                    <span className="mt-auto inline-flex items-center justify-between rounded-lg border border-border bg-card px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                       View details
-                      <Sparkles className="h-4 w-4 text-cyan-300" />
+                      <Sparkles className="h-4 w-4 text-accent" />
                     </span>
                   </span>
 
                   <span className="experience-flip-face experience-flip-back">
                     <span className="mb-3 flex items-start justify-between gap-3">
                       <span>
-                        <span className="block text-sm uppercase tracking-[0.18em] text-cyan-300">Key impact</span>
-                        <span className="mt-1 block text-lg font-semibold text-white">{exp.company}</span>
+                        <span className="block text-sm uppercase tracking-[0.18em] text-accent">Key impact</span>
+                        <span className="mt-1 block text-lg font-semibold text-foreground">{exp.company}</span>
                       </span>
-                      <span className="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300">Flip back</span>
+                      <span className="rounded-full border border-border px-3 py-1 text-xs text-foreground/90">Flip back</span>
                     </span>
                     {exp.highlights.length > 0 ? (
                       <span className="experience-flip-scroll">
                         {exp.highlights.map((highlight) => (
                           <span key={highlight.id} className="experience-flip-bullet">
-                            <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-300" />
+                            <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent dark:bg-cyan-300" />
                             <span>{highlight.text}</span>
                           </span>
                         ))}
                       </span>
                     ) : (
-                      <span className="text-sm text-slate-400">No bullet points yet.</span>
+                      <span className="text-sm text-muted-foreground">No bullet points yet.</span>
                     )}
                   </span>
                 </span>
@@ -348,7 +348,7 @@ export default async function HomePage() {
       </section>
 
       <section className="glass-card animate-fade-in-up p-6">
-        <h2 className="mb-4 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-slate-400">
+        <h2 className="mb-4 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-muted-foreground">
           <GraduationCap className="h-4 w-4" />
           Education
         </h2>
@@ -356,12 +356,12 @@ export default async function HomePage() {
           {profile.educations.map((edu) => (
             <article
               key={edu.id}
-              className="rounded-xl border border-slate-800 bg-slate-950/70 p-4 transition-all hover:border-cyan-500/50 hover:bg-slate-950"
+              className="rounded-xl border border-border bg-card/90 p-4 transition-all hover:border-cyan-500/50 hover:bg-card"
             >
-              <p className="font-medium text-white">{edu.degree}</p>
-              <p className="text-sm text-slate-300">{edu.institution}</p>
+              <p className="font-medium text-foreground">{edu.degree}</p>
+              <p className="text-sm text-foreground/90">{edu.institution}</p>
               {formatEducationYears(edu.startYear, edu.endYear) ? (
-                <p className="text-sm text-slate-500">{formatEducationYears(edu.startYear, edu.endYear)}</p>
+                <p className="text-sm text-muted-foreground/80">{formatEducationYears(edu.startYear, edu.endYear)}</p>
               ) : null}
             </article>
           ))}
@@ -370,7 +370,7 @@ export default async function HomePage() {
 
       {profile.testimonials.length > 0 ? (
         <section className="glass-card animate-fade-in-up p-6">
-          <h2 className="mb-4 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-slate-400">
+          <h2 className="mb-4 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-muted-foreground">
             <Mail className="h-4 w-4" />
             Testimonials
           </h2>
@@ -392,7 +392,7 @@ export default async function HomePage() {
 
       {profile.certifications.length > 0 ? (
         <section className="glass-card animate-fade-in-up p-6">
-          <h2 className="mb-4 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-slate-400">
+          <h2 className="mb-4 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-muted-foreground">
             <ChartNoAxesCombined className="h-4 w-4" />
             Certifications
           </h2>
@@ -413,8 +413,8 @@ export default async function HomePage() {
       ) : null}
 
       <section className="glass-card animate-fade-in-up p-6">
-        <h2 className="mb-4 text-sm uppercase tracking-[0.2em] text-slate-400">Get In Touch</h2>
-        <p className="mb-4 text-slate-300">
+        <h2 className="mb-4 text-sm uppercase tracking-[0.2em] text-muted-foreground">Get In Touch</h2>
+        <p className="mb-4 text-foreground/90">
           Open to QA opportunities, testing challenges, or connecting with fellow professionals.
         </p>
         <ContactForm />

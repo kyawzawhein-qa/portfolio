@@ -13,7 +13,7 @@ export default function CertificationBadge({
   date,
   expiryDate,
   credentialId,
-  credentialUrl,
+  credentialUrl
 }: CertificationBadgeProps) {
   const formatDate = (d: Date | undefined) => {
     if (!d) return "";
@@ -21,34 +21,18 @@ export default function CertificationBadge({
   };
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-4 transition-all hover:border-cyan-500/50 hover:bg-slate-950">
-      <h3 className="mb-2 font-semibold normal-case tracking-normal text-white">{name}</h3>
-      {issuer && (
-        <p className="mb-1 text-sm text-slate-400">
-          Issued by {issuer}
-        </p>
-      )}
-      {date && (
-        <p className="mb-1 text-sm text-slate-400">
-          Issued {formatDate(date)}
-        </p>
-      )}
-      {expiryDate && (
-        <p className="mb-1 text-sm text-slate-400">
-          Expires {formatDate(expiryDate)}
-        </p>
-      )}
-      {credentialId && (
-        <p className="mb-1 text-sm text-slate-400">
-          Credential ID: {credentialId}
-        </p>
-      )}
+    <div className="rounded-xl border border-border bg-card/90 p-4 transition-all hover:border-accent/50 hover:bg-card">
+      <h3 className="mb-2 font-semibold normal-case tracking-normal text-foreground">{name}</h3>
+      {issuer && <p className="mb-1 text-sm text-muted-foreground">Issued by {issuer}</p>}
+      {date && <p className="mb-1 text-sm text-muted-foreground">Issued {formatDate(date)}</p>}
+      {expiryDate && <p className="mb-1 text-sm text-muted-foreground">Expires {formatDate(expiryDate)}</p>}
+      {credentialId && <p className="mb-1 text-sm text-muted-foreground">Credential ID: {credentialId}</p>}
       {credentialUrl && (
         <a
           href={credentialUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-sm text-cyan-400 hover:text-cyan-300"
+          className="inline-flex items-center gap-1 text-sm text-accent hover:text-accent/80"
         >
           Verify Credential
           <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">

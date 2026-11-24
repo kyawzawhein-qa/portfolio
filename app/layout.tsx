@@ -24,6 +24,8 @@ const body = IBM_Plex_Sans({
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "https://kyawzawhein.com";
 
+const themeInitScript = `(function(){try{var t=localStorage.getItem("theme");if(t==="light"){document.documentElement.classList.remove("dark");}else{document.documentElement.classList.add("dark");}}catch(e){}})();`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -78,8 +80,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const visitorCount = await getUniqueVisitorCount();
 
   return (
-    <html lang="en" className={`dark ${display.variable} ${body.variable}`}>
-      <body className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 font-sans antialiased">
+    <html lang="en" className={`dark ${display.variable} ${body.variable}`} suppressHydrationWarning>
+      <body className="min-h-screen bg-background bg-gradient-to-b from-slate-50 via-white to-slate-100 font-sans antialiased dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <main className="mx-auto max-w-6xl px-4 py-10 md:px-8">
           <SiteHeader visitorCount={visitorCount} />
