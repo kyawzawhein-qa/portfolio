@@ -13,13 +13,21 @@ const config: Config = {
         display: ["var(--font-display)", "Segoe UI", "sans-serif"]
       },
       colors: {
-        background: "#020617",
-        foreground: "#e2e8f0",
-        accent: "#22d3ee",
-        border: "#1e293b"
+        background: "rgb(var(--background-rgb) / <alpha-value>)",
+        foreground: "rgb(var(--foreground-rgb) / <alpha-value>)",
+        accent: "rgb(var(--accent-rgb) / <alpha-value>)",
+        border: "rgb(var(--border-rgb) / <alpha-value>)",
+        card: {
+          DEFAULT: "rgb(var(--card-rgb) / <alpha-value>)",
+          foreground: "rgb(var(--card-foreground-rgb) / <alpha-value>)"
+        },
+        muted: {
+          DEFAULT: "rgb(var(--muted-rgb) / <alpha-value>)",
+          foreground: "rgb(var(--muted-foreground-rgb) / <alpha-value>)"
+        }
       },
       boxShadow: {
-        card: "0 20px 40px rgba(2, 6, 23, 0.75)"
+        card: "var(--shadow-card)"
       }
     }
   },

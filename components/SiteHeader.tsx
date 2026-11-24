@@ -12,13 +12,13 @@ export default function SiteHeader({ visitorCount }: SiteHeaderProps) {
       <nav className="flex flex-wrap items-center gap-2 text-sm">
         <Link
           href="/"
-          className="rounded-lg border border-slate-800 bg-slate-950/70 px-3 py-1.5 font-medium text-slate-200 hover:border-cyan-500/40 hover:text-cyan-300"
+          className="rounded-lg border border-border bg-card/80 px-3 py-1.5 font-medium text-foreground transition hover:border-accent/50 hover:text-accent"
         >
           Portfolio
         </Link>
         <Link
           href="/blog"
-          className="rounded-lg border border-slate-800 bg-slate-950/70 px-3 py-1.5 font-medium text-slate-200 hover:border-cyan-500/40 hover:text-cyan-300"
+          className="rounded-lg border border-border bg-card/80 px-3 py-1.5 font-medium text-foreground transition hover:border-accent/50 hover:text-accent"
         >
           Blog
         </Link>

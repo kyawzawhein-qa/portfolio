@@ -24,7 +24,7 @@ export default function BlogMarkdown({ content }: BlogMarkdownProps) {
           a: ({ href, children }) => (
             <a
               href={href}
-              className="text-cyan-300 underline-offset-4 hover:underline"
+              className="text-accent underline-offset-4 hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >

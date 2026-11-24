@@ -21,36 +21,36 @@ export default async function BlogIndexPage() {
   return (
     <div className="space-y-6">
       <section className="glass-card p-8">
-        <p className="mb-2 inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-cyan-300">
+        <p className="mb-2 inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-accent">
           <FileText className="h-4 w-4" />
           Blog
         </p>
-        <h1 className="text-3xl font-bold text-white md:text-4xl">Writing & notes</h1>
-        <p className="mt-3 max-w-2xl text-slate-400">
+        <h1 className="text-3xl font-bold text-foreground md:text-4xl">Writing & notes</h1>
+        <p className="mt-3 max-w-2xl text-muted-foreground">
           QA engineering notes on test automation, delivery practices, and quality leadership. Posts may be authored in
-          the admin CMS or stored as Markdown under <code className="text-cyan-200">content/blog</code>.
+          the admin CMS or stored as Markdown under <code className="text-accent">content/blog</code>.
         </p>
       </section>
 
       <section className="space-y-4">
         {posts.length === 0 ? (
-          <div className="glass-card p-6 text-slate-400">No posts yet.</div>
+          <div className="glass-card p-6 text-muted-foreground">No posts yet.</div>
         ) : (
           posts.map((post) => (
-            <article key={post.slug} className="glass-card p-6 transition hover:border-cyan-500/30">
-              <div className="mb-2 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+            <article key={post.slug} className="glass-card p-6 transition hover:border-accent/30">
+              <div className="mb-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                 <span className="inline-flex items-center gap-1">
                   <CalendarDays className="h-3.5 w-3.5" />
                   {post.date || "Undated"}
                 </span>
               </div>
-              <h2 className="text-xl font-semibold normal-case tracking-normal text-white">
-                <Link href={`/blog/${post.slug}`} className="hover:text-cyan-300">
+              <h2 className="text-xl font-semibold normal-case tracking-normal text-foreground">
+                <Link href={`/blog/${post.slug}`} className="hover:text-accent">
                   {post.title}
                 </Link>
               </h2>
-              {post.description ? <p className="mt-2 text-sm text-slate-400">{post.description}</p> : null}
-              <Link href={`/blog/${post.slug}`} className="mt-4 inline-block text-sm font-medium text-cyan-300 hover:text-cyan-200">
+              {post.description ? <p className="mt-2 text-sm text-muted-foreground">{post.description}</p> : null}
+              <Link href={`/blog/${post.slug}`} className="mt-4 inline-block text-sm font-medium text-accent hover:text-accent/80">
                 Read post →
               </Link>
             </article>
