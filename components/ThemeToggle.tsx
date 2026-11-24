@@ -29,11 +29,11 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-sm flex items-center gap-2 transition-all hover:border-cyan-400 hover:bg-cyan-500/10 hover:text-cyan-300"
+      className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-sm text-foreground transition-all hover:border-accent hover:bg-accent/10 hover:text-accent"
       aria-label="Toggle theme"
     >
       {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-      <span className="text-slate-200">{isDark ? "Light Mode" : "Dark Mode"}</span>
+      <span>{isDark ? "Light Mode" : "Dark Mode"}</span>
     </button>
   );
 }

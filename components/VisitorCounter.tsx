@@ -132,15 +132,15 @@ export default function VisitorCounter({ initialCount }: VisitorCounterProps) {
 
   return (
     <div
-      className="visitor-counter animate-pulse-glow inline-flex items-center gap-3 rounded-2xl border border-cyan-500/35 bg-cyan-500/10 px-4 py-2.5"
+      className="visitor-counter animate-pulse-glow inline-flex items-center gap-3 rounded-2xl border border-accent/35 bg-accent/10 px-4 py-2.5"
       aria-label={`${display} unique visitors`}
     >
-      <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-500/40 bg-slate-950/80 text-cyan-300">
+      <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-accent/40 bg-card text-accent">
         <Users className="h-4 w-4" />
       </span>
       <div className="text-left">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan-300/90">Unique visitors</p>
-        <p className="font-mono text-2xl font-bold tabular-nums text-white drop-shadow-[0_0_12px_rgba(34,211,238,0.45)]">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-accent/90">Unique visitors</p>
+        <p className="font-mono text-2xl font-bold tabular-nums text-foreground drop-shadow-[0_0_12px_rgba(14,116,144,0.25)] dark:drop-shadow-[0_0_12px_rgba(34,211,238,0.45)]">
           {digits.split("").map((char, index) => (
             <span key={`${index}-${char}`} className="inline-block min-w-[0.65em] text-center">
               {char}
