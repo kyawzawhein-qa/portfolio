@@ -22,12 +22,6 @@ export default function SiteHeader({ visitorCount }: SiteHeaderProps) {
         >
           Blog
         </Link>
-        <Link
-          href="/feed.xml"
-          className="rounded-lg border border-transparent px-3 py-1.5 text-slate-500 hover:text-cyan-300"
-        >
-          RSS
-        </Link>
       </nav>
       <div className="flex items-center gap-3 sm:ml-auto">
         <VisitorCounter initialCount={visitorCount} />
